@@ -1,0 +1,92 @@
+services:
+  mysql:
+    container_name: mysql-db2
+    build: ./mysql/
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'bronzedb'
+      MYSQL_USER: 'scheneyder'
+      MYSQL_PASSWORD: 'pulse1010'
+      MYSQL_ROOT_PASSWORD: 'IGTExpKAKA'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./my-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin","ping","-h","localhost"]
+      timeout: 5s
+      retries: 160
+
+  pythonapp1:
+    container_name: python-script1
+    command: sh -c "python3 ./func1.py"
+    build: ./python1/
+    volumes:
+      - /app
+    depends_on:
+      mysql:
+            condition: service_healthy
+
+  pythonapp2:
+    container_name: python-script2
+    command: sh -c "python3 ./func2.py"
+    build: ./python2/
+    volumes:
+      - /app
+    depends_on:
+      mysql:
+            condition: service_healthy
+
+  pythonapp3:
+    container_name: python-script3
+    command: sh -c "python3 ./func3.py"
+    build: ./python3/
+    volumes:
+      - /app
+    depends_on:
+      mysql:
+            condition: service_healthy
+
+  pythonapp4:
+    container_name: python-script4
+    command: sh -c "python3 ./func4.py"
+    build: ./python4/
+    volumes:
+      - /app
+    depends_on:
+      mysql:
+            condition: service_healthy
+
+  pythonapp5:
+    container_name: python-script5
+    command: sh -c "python3 ./func5.py"
+    build: ./python5/
+    volumes:
+      - /app
+    depends_on:
+      mysql:
+            condition: service_healthy
+
+  pythonapp6:
+    container_name: python-script6
+    command: sh -c "python3 ./func6.py"
+    build: ./python6/
+    volumes:
+      - /app
+    depends_on:
+      mysql:
+            condition: service_healthy
+
+  pythonapp7:
+    container_name: python-script7
+    command: sh -c "python3 ./func7.py"
+    build: ./python7/
+    volumes:
+      - /app
+    depends_on:
+      mysql:
+            condition: service_healthy
+
